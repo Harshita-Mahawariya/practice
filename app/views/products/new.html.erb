@@ -1,0 +1,53 @@
+<style>
+  table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+th{
+  background-color: #ccccb3;
+}
+td{
+  background-color: #d1e0e0;
+  text-align: center;
+}
+h3{
+  background-color: #ffff80;
+}
+#a{
+    background-color: #ffff80;
+    text-indent: 220px;
+}
+</style>
+<h3 align="center">Form</h3><br><br>
+<div align="center">
+  <%= form_with model: @product, url:"/home" ,method:"post" do |form| %>
+    <table  style="width:40%">
+      <tr>
+        <th colspan="3" id="a"> Product</th>
+      </tr>
+      <tr>
+        <th><%= form.label :category %><br></th>
+        <th><%= form.label :name %><br></th>
+        <th><%= form.label :image %><br></th>
+      </tr>
+      <tr>
+        <td><%= form.select :category_id,options_for_select(Category.all.map{|b| [b.name, b.id]}) %><br></td>
+        <td><%= form.text_field :name %><br></td>
+        <td><%= form.file_field :image, accept: 'image/png, image/gif, image/jpeg, image/jpg'%>
+        <% @product.errors.full_messages_for(:image).each do |message| %>
+        <%= message %>
+        <% end %></td>
+      </tr>
+      <tr>
+        <th colspan="3" id="a"> Product Variant</th>
+      </tr>
+      <tr>
+        <th><%= form.label :Brand %></th>
+      </tr>
+    </table>
+  <div>
+    <%= form.submit %>
+  </div>
+  <% end %>
+</div>
+

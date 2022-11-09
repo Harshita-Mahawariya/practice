@@ -1,0 +1,25 @@
+<style>
+	th,td{
+		font-size: 15px;
+	}
+</style>
+
+<h1 style="position: relative;top: -145px;left: 1772px;"><%= link_to image_tag("/assets/back.jpg", height: '40', width: '40'), home_index_path %></h1>
+<center>
+	<table style="position: relative;top: -103px;">
+	<% if @order&.present? %>
+		<% @order.each do |o|%>
+			<tr><td>Order_Number = <%=  o.order_no%></td><td> Status = <%=o.status%><br><br></td>
+			<% o.order_items.each do |orderitem| %>
+			  <% if orderitem&.product&.image.present? %>
+				  <td><div><a href="<%= product_path(orderitem&.product.id) %>"><%= image_tag url_for(orderitem&.product.image), :size => "200x200" %><br></a></div></td>
+				<%end%>
+		  	<td><h4>Name = <%=orderitem&.product.name%><br>Price = <%=orderitem&.product.price%><br><br></h4></td>
+		  	<td><%=link_to 'Details', details_order_path(orderitem.id)%></td>
+			<% end %>
+		<%end%>
+	 <% else %>
+	  <%= "Product not found" %>
+	 <%end%>
+	</table>
+</center>

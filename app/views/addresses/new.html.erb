@@ -1,0 +1,52 @@
+<%= form_with model:@address, method: "post" do |f| %>
+<div style="  position: relative;top: -53px;width: 90%;left: 145px;">
+  <div class="field">
+    <%= f.label :house_no %><br/>
+    <%=f.text_field :house_no%><br/>
+    <%@address&.errors&.full_messages_for(:house_no)&.each do |message|%>
+    <div> <%=message %></div><%end%>
+  </div><br/>
+
+  <div class="field">
+    <%= f.label :building_name%><br/>
+    <%=f.text_field :building_name%><br/>
+    </div><br/>
+
+  <div class="field">
+    <%= f.label :area_or_colony %><br />
+    <%= f.text_field :area_or_colony%><br/>
+    <%@address.errors.full_messages_for(:area_or_colony).each do |message|%>
+    <div> <%=message %></div><%end%>
+  </div><br/>
+
+  <div class="field">
+    <%= f.label :pincode %><br />
+    <%= f.text_field :pincode%><br/>
+    <%@address.errors.full_messages_for(:pincode).each do |message|%>
+    <div> <%=message %></div><%end%>
+  </div><br/>
+
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city%><br/>
+    <%@address.errors.full_messages_for(:city).each do |message|%>
+    <div> <%=message %></div><%end%>
+  </div><br/>
+
+  <div class="field">
+    <%= f.label :near_by_location %><br />
+    <%= f.text_field :near_by_location%><br/>
+  </div><br/>
+
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state%><br/>
+    <%@address.errors.full_messages_for(:state).each do |message|%>
+    <div> <%=message %></div><%end%>
+  </div><br/>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</div>
+<% end %>

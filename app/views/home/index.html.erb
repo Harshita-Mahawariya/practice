@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Practice</title>
+    <style>
+    .marquee{
+    width: 100%;
+    direction: right;
+    height: 100px;
+    color: #37859B;
+    font-size: 50px;
+    font-family: sans-serif;
+    position: relative;
+    top: -180px;
+    }
+    .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-gap: 26px;
+    margin-left: 80px;
+    position: relative;
+    top: -220px;
+    }
+    .card {
+    display: grid;
+    grid-template-rows: max-content 0px 1fr;
+    }
+
+    .card im {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    }
+    .view{
+    font-size: 18px;
+    padding-left: 1407px;
+    position: relative;
+    top: -200px;
+    }
+    .d{
+        font-size: 20px;
+        position: relative;
+        left: 3px;
+      }
+    html {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: white;
+      }
+    li {
+      float: left;
+      font-size: 18px;
+    }
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    li a:hover {
+      background-color: #d1e0e0;
+    }
+    </style>
+  </head>
+  <body>
+    <div><ul style="position: relative; left: 1440px; top:-150px;">
+    <li><a href="<%= categories_path %>">Category</a></li>
+    <li><a href="<%=products_path%>">Products</a></li>
+    <li><a href="<%=carts_path%>">Cart</a></li>
+    <li><a href="<%=orders_path%>">Order</a></li>
+    </div></ul>
+   <h2 style="color: white; position: relative; left:1800px; top: -209px; "><%= link_to image_tag("/assets/logout button.png", height: '30', width: '30'), destroy_user_session_path ,method: :delete%></h2>
+<!-- 
+    <a href="destroy_user_session_path" ,method: :delete>
+         <img alt="Qries" src="/assets/logout button.png"
+         width="20" height="20" style="color: white; position: relative; left: 1505px; top: -190px;">
+    </a> -->
+
+    <marquee class="marquee">Welcome to our Website</marquee>
+      <p class="view"><%= link_to "View more", products_path %></p>
+      <div class="cards">
+        <% @products.each do |product| %>
+          <article class="card">
+            <div class="im">
+              <% if product&.present? %>
+                <% if product&.image.present? %>
+                  <%#= image_tag url_for(product.image), :size => "200x200" %>
+                  <a href="<%= product_path(product.id) %>"><%= image_tag url_for(product.image), :size => "200x200" %></a>
+                <%else%>
+                  <br><br><br><br><br><br><br><br><br><br><br>
+                <%end%>
+                <br><h4 style="font-size: 20px;">
+                <a href="<%=product_path(product.id)%>"><%= product.name%></a><br></h4>
+                <a class="d" href="<%=  product_add_to_cart_path(product.id)%>">Add to Cart
+                    </a><br>
+                <%#= link_to "Destroy", admin_product_path(product.id), method: :delete%>
+                <% else %>
+                <%= "Product not found" %>
+              <% end %>
+
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <footer>
+    </footer>
+  </body>
+</html>
