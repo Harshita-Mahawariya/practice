@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Practice</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_include_tag "application" 'data-turbolinks-track' => true %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+    .header{
+      text-align: center;
+      background-color: #639BAC;
+      color : white;
+    }
+    .in{
+      margin-left: 10px;
+      line-height: 4;
+    }
+    h1{
+      font-family: "Times New Roman";
+       text-shadow: 2px 2px 20px ;
+       color: #37859B;
+    }
+    .is{
+      position:relative;
+      left:90px; top:-80px;
+    }
+  </style>
+  </head>
+  <body>
+    <div class="header">CONTACT&nbsp;&nbsp;&nbsp;&nbsp;7024452752 &nbsp;&nbsp;&nbsp;&nbsp;harshitam@witmates.com</div>
+    <img class="in" width="70" height="70" src = <%="/assets/logo2.png"%>>
+    <h1 class="is">Basketship</h1>
+    <% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+    <%= yield %>
+    </body>
+</html>

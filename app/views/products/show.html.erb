@@ -1,0 +1,143 @@
+<!-- <h2 align="center" , style="background-color:#ffff80;"><%#= @product.name%> </h2> -->\
+<p class="b"><%= link_to image_tag("/assets/back.jpg", height: '40', width: '40'), home_index_path %></p>
+<style>
+  table{
+    position: relative;
+    top: -100px;
+    border: 1px solid white;
+    border-collapse: collapse;
+  }
+  td,th{
+    background-color: #d1e0e0;
+    border: 1px solid white;
+    border-collapse: collapse;
+    font-size: 20px;
+  }
+  div.a {
+    text-indent: 1300px;
+  }
+  .b{
+    font-size: 20px;
+    position: relative;
+    top: -158px;
+    padding-left: 1460px;
+  }
+  .head{
+    font-size: 20px;
+  }
+  html{
+    overflow-x: hidden;
+  }
+   .des{
+    width: 845px;height: 35px;"
+   }
+</style>
+<center>
+
+  <table style="width:60%">
+    <tr><td colspan = '6' align="center" class="head">Product</td></tr>
+    <tr>
+      <th>ID</th>
+      <td colspan="5"><%= @product.id %></td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td colspan="5"><%= @product.name%></td>
+    </tr>
+    <tr>
+      <th>Category Name</th>
+      <td colspan="5"><%= @product&.category&.name%></td>
+    </tr>
+    <tr>
+      <th>Image</th>
+      <td colspan="5"><% if @product.image.present? %>
+             <%= image_tag @product.image, :size => "200x200" %>
+          <%end%>
+      </td>
+    </tr>
+    <%if @product&.productvariants.present?%>
+        <tr><td colspan="6" align="center" class="head">Product Variant</td></tr>
+      <% @product&.productvariants.each do |pv|  %>
+        <tr></tr>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Place</th>
+          <th>Description</th>
+          <th colspan="2">Variant & Variant Property</th>
+        </tr>
+        <tr>
+          <td rowspan="6" ><%= pv&.name%></td>
+          <td rowspan="6" ><%= pv&.price%></td>
+          <td rowspan="6" ><%= pv&.place%></td>
+          <td rowspan="6" ><%= pv&.Description%></td>
+          <%if pv.product_with_variant_properties.present?%>
+            <tr>
+            <th>Name</th>
+            <th>Value</th>
+            </tr>
+            <% pv&.product_with_variant_properties.each do |pvp|  %>
+              <%#byebug%>
+              <tr>
+              <td><%= pvp&.variant_property&.variant&.name%> </td>
+              <td><%= pvp&.variant_property&.name%></td>
+              </tr>
+            <%end%>
+            <%else%>
+            <th></th><th></th>
+          <%end%>
+        </tr>
+      <% end %>
+    <%else%>
+      <tr></tr>
+    <%end%>
+  </table>
+
+  <%= form_with model: [ @product, @product.queries.build], url:"/queries" ,method:"post" do |form| %>
+    <table  style="width:60%">
+      <tr>
+        <th><%= form.label :Query %><br></th>
+      </tr>
+      <tr>
+        <%= form.hidden_field :product_id, :value => @product.id%>
+        <td><%= form.text_field :description %><br></td>
+      </tr>
+      <tr>
+        <td class="des"><%= form.submit %></td>
+      </tr>
+    </table>
+  <%end%>
+
+  <table style="width:60%">
+    <tr>
+      <th colspan="3">Question and answer</th>
+    </tr>
+    <% @query.each do |qr| %>
+      <% if qr.answer_id == nil %>
+        <tr>
+          <td><%= qr.description%>
+            <%#byebug%>
+            <% if qr.likes.where(user_id: current_user.id).present?%>
+              <%= link_to image_tag("/assets/qlike.jpg", height: '25', width: '25'), product_qunlike_path(qr.id) %><br>
+            <%else%>
+              <%= link_to image_tag("/assets/qunlike.png", height: '20', width: '20'), product_qlike_path(qr.id) %><br>
+            <%end%>
+          </td>
+          <td>
+            <% qr.replies.each do |a|%>
+                <%= a.description%><br>
+            <%end%>
+          </td>
+          <%= form_with model: [ @product, @product.queries.build ] , url:"/queries" ,method:"post" do |f| %>
+            <%= f.hidden_field :answer_id, :value => qr.id%>
+            <%= f.hidden_field :product_id, :value => @product.id%>
+            <td>
+              <%= f.text_area :description%>
+              <%= f.submit "Reply"%>
+            </td>
+          <%end%>
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+</center>

@@ -1,0 +1,91 @@
+// Sass variable overrides must be declared before loading up Active Admin's styles.
+//
+// To view the variables that Active Admin provides, take a look at
+// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
+// Active Admin source.
+//
+// For example, to change the sidebar width:
+// $sidebar-width: 242px;
+
+// Active Admin's got SASS!
+@import "active_admin/mixins";
+@import "active_admin/base";
+
+// Overriding any non-variable Sass must be done after the fact.
+// For example, to change the default status-tag color:
+//
+.status_tag { background: #FF0000; }
+
+p
+{
+text-indent: 300px;
+}
+
+.pv_panel{
+  text-align: right;
+}
+
+.pv_panel inputs has_many_fields{
+  width: 100px;
+  height: 100px;
+}
+
+.product_with_variant_properties .pv {
+  
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.18);
+}
+
+.productvariants .pv_panel {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-right: 100px;
+  padding-left: 100px;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.18);
+}
+
+.pv_panel .button.has_many_remove{
+  float: left;
+}
+
+.pv .button.has_many_remove{
+  float: right;
+  margin-top: 35px;
+}
+
+.button.has_many_add {
+  margin-top: 35px;
+}
+
+.variantP{
+  margin-right: 582px;
+}
+
+.pv.inputs.has_many_fields {
+  margin-left: 134px;
+}
+
+.variant_properties .pv_3{
+  margin-right: 150px;
+  margin-left: 150px;
+}
+
+
+.addresses .pv_1 { 
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 152px;
+  padding-left: 199px;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.18);
+}
+
+.cart_items .pv_2 { 
+  padding-top: 60px;
+  padding-bottom: 60px;
+  padding-right: 152px;
+  padding-left: 199px;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.18);
+}

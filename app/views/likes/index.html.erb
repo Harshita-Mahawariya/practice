@@ -1,0 +1,19 @@
+<style>
+	th,td{
+		font-size: 20px;
+	}
+</style>
+<table>
+	<tr><th colspan="2">Liked Products</th></tr>
+	<% @p.each do |p|%>
+		<tr>
+			<td><%= p.name %><br></td>
+			<td><a href="<%= like_unlike_path(p.id)%>">Unlike</a></td>
+			<td>
+				<% if p&.image.present? %>
+		    	<a href="<%= product_path(p.id) %>"><%= image_tag url_for(p.image), :size => "225x225" %></a>
+		    <%end%>
+		   </td>
+		</tr>
+	<%end%>
+</table>

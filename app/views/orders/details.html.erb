@@ -1,0 +1,19 @@
+<h1 style="position: relative;top: -145px;left: 1493px;"><%= link_to image_tag("/assets/back.jpg", height: '30', width: '30'), home_index_path %></h1>
+<table  style="position: relative;top: -103px;">
+	<% @oi.each do |oi|%>
+	<tr>
+		<td><a href="<%= product_path(oi.product_id)%>"><%= image_tag url_for(oi&.product.image), :size => "200x200" %></a>
+		<td><%= oi&.product.name%></td>
+		<% a=oi.order.address%>
+		<td>house no <%=a.house_no%> building name <%=a.building_name%>,<%=a.area_or_colony%>,<%=a.pincode%>,<%=a.city%>,<%=a.state%>,<%=a.near_by_location%></td>
+		<td><%=oi.order.status%></td>
+		<td><%=oi&.product.price%></td>
+	</tr>
+	<%end%>
+
+	<%@orders.each do |o| %>
+		<%o.order_items.each do |orderitem|%>
+			<tr><td><a href="<%=  details_order_path(orderitem.id)%>"><%= image_tag url_for(orderitem&.product.image), :size => "150x150" if orderitem.id != params[:id].to_i %></a></td>
+		<%end%>
+	<%end%>
+</table>

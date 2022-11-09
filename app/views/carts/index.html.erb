@@ -1,0 +1,89 @@
+<style>
+	.top{
+		position: relative;
+		top: -90px;
+		left: -200px;
+		height: 300px;
+		width: 50%;
+		border: 1px solid white;
+	}
+	input[type='number_field']{
+    width: 80px;
+	}
+	.h{
+		position: relative;
+		top: -169px;
+		left: 214px;
+	}
+	cart{
+		width: 300px;
+		padding: 10px;
+		border: 2px solid red;
+	}
+	h5{
+		width: 195px;
+		padding: 9px;
+		border: 2px solid white;
+		position: relative;
+		top: -225px;
+		left: 273px;
+	}
+	.ab{
+		position: relative;
+		top: -227px;
+		left: 170px;
+	}
+	.abc{
+		position: relative;
+		top: -450px;
+		left: 168px;
+		font-size: 17px;
+	}
+	im.{
+		position: relative;
+		top: -10px;
+		left: 1120px;
+	}
+</style>
+
+<center>
+	<h1 style="position: relative;top: -145px;left: 862px;"><%= link_to image_tag("/assets/back.jpg", height: '40', width: '40'), home_index_path %></h1>
+<% @cart_item.each do |cart| %>
+  <% if @cart&.present? %>
+  		<div class="top">
+  			<% if cart&.product&.image.present? %>
+	        <a href="<%= product_path(cart&.product.id) %>"><%= image_tag url_for(cart&.product.image), :size => "200x200" %></a>
+        <%else%>
+        	<br><br><br><br><br><br><br><br><br><br><br>
+      	<%end%>
+		      <h4 class="h">Name = <%=cart&.product.name%> &nbsp &nbsp &nbsp Price = <%=cart.cart_item_price%><br><br></h4>
+		      <h4 style="position: relative;top: -169px;left: 150px;">Quantity</h4>
+		      <%= form_with url: cart_update_cart_path(cart_id: cart), method: "post" do |form| %>
+					<h5><%= form.number_field :cart_item_quantity, :value => cart.cart_item_quantity %><br></h5>
+					<h6 class="ab"><%= form.submit %></h6>
+					<% end %>
+					<h6 class="abc"><%= link_to "Destroy", cart_cart_item_destroy_path(cart.id), method: :delete%></h6>
+  		</div>
+  <% else %>
+  <%= "Product not found" %>
+  <% end %>
+<%end%>
+
+<% if @cart_item&.present? %>
+  <h3 style="position: relative;top: -140px;left: -77px; font-size: 25px;"> Total cart price = <%= @cart.cart_price %> &nbsp &nbsp &nbsp Total cart Quantity = <%= @cart.cart_quantity%></h3>
+	<div style="position: relative;top: -145px; font-size: 20px;">
+	Choose address =
+	<%= form_with url: create_order_orders_path, method: "post" do |f|%>
+		<%@addresses.each do |a|%>
+			<%= f.radio_button :address_id, a.id %>
+				<label>house no <%=a.house_no%> building name <%=a.building_name%>,<%=a.area_or_colony%>,<%=a.pincode%>,<%=a.city%>,<%=a.state%>,<%=a.near_by_location%></label><br/>
+		<%end%>
+		<a href ="<%= new_address_path(current_user.id)%>"> Add new address</a><br/>
+	 	<%= f.submit "Place order"%><br/><br/>
+	<%end%>
+	</div>
+	<% else %>
+  <%= "Cart is Empty" %>
+<%end%>
+
+</center>

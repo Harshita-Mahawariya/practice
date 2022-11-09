@@ -1,0 +1,6 @@
+active_admin_form_for [:admin, resource] do |f|
+  inputs :category, :name, :price, :quantity
+  actions
+end
+
+ 

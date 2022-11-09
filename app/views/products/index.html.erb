@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Practice</title>
+      <style>
+      .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-gap: 26px;
+      margin-left: 40px;
+      position: relative;
+      top: -78px;
+      }
+
+      .card {
+      display: grid;
+      grid-template-rows: max-content 20px 1fr;
+      }
+
+      .card im {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      }
+      .b{
+        font-size: 20px;
+        padding-left: 1170px;
+        position: relative;
+        top: -191px;
+      }
+      html {
+          height: 100%;
+          overflow-x: hidden;
+      }
+      ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: white;
+      }
+      li {
+        float: left;
+        font-size: 18px;
+      }
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      li a:hover {
+        background-color: #d1e0e0;
+      }
+      .d{
+        font-size: 20px;
+        position: relative;
+        left: 3px;
+      }
+      .note{
+        color: #154360;
+        text-decoration: underline #154360 3px;
+        font-style: oblique;
+        position: relative;
+        top: -48px;
+        left: 653px;
+        font-size: 20px;
+      }
+      .im
+      {
+      position: relative;
+      top: -6px;
+      }
+      </style>
+      </head>
+      <body>
+        <div class="note"><%= flash[:message] %></div>
+        <div class="note"><%= flash[:harshita] %></div>
+        <div style="color: orange; position: relative;top: -48px;left: 653px;font-size: 20px;"><%= flash[:supriya] %></div>
+        <ul style="position: relative; left: 1365px; top:-150px;">
+        <li><a href="<%=home_index_path%>">Home</a></li>
+        <li><a href="<%=categories_path %>">Category</a></li>
+        <li><a href="<%=carts_path%>">Cart</a></li>
+        <li><a href="<%=orders_path%>">Orders</a></li>
+        <li><a href="<%=likes_path%>">Liked</a></li>
+        <li class="im"><%= link_to image_tag("/assets/back.jpg", height: '40', width: '40'), home_index_path %></li>
+        </div></ul>
+          <div class="cards">
+            <% @products.each do |product| %>
+              <article class="card">
+                <div class="im">
+                  <% if product&.present? %>
+                    <% if product&.image.present? %>
+                      <a href="<%= product_path(product.id) %>"><%= image_tag url_for(product.image), :size => "225x225" %></a>
+                    <%else%>
+                      <br><br><br><br><br><br><br><br><br><br><br><br>
+                    <%end%>
+                    <br>
+                    <h4 style="font-size:20px">
+
+                    <% if product.likes.where(user_id: current_user.id).present?%>
+                      <%= link_to image_tag("/assets/like.png", height: '40', width: '40'), product_unlike_path(product.id) %><br>
+                    <%else%>
+                      <%= link_to image_tag("/assets/unlike.jpeg", height: '40', width: '40'), product_like_path(product.id) %><br>
+                    <%end%>
+                    <a href="<%= product_path(product.id) %>"><%= product.name%></a></h4>
+                    <a class="d" href="<%=  product_add_to_cart_path(product.id)%>">Add to Cart
+                    </a><br>
+                  <% else %>
+                    <%= "Product not found" %>
+                  <% end %>
+                </div>
+              </article>
+            <% end %>
+          </div>
+      </body>
+</html>
