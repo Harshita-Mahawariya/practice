@@ -2,12 +2,23 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
+  namespace :api, constraints: { format: :json } do
+      namespace :v1, constraints: { format: :json } do
+        devise_for :users, controllers: {
+          sessions: 'api/v1/users/sessions',
+          registrations: 'api/v1/users/registrations'
+        },path: '', path_names: {
+          sign_in: 'login',
+          sign_out: 'logout',
+          registration: 'signup'
+        }
+        resources :users do
+          get 'roles',to: 'users#roles', on: :collection
+        end
+      end
+    end
 
-# root to: redirect('/admin')
-# resources :home do
-#  get 'product_index', to: 'home#product_index', on: :collection
-# end
 root to: "home#index"
 resources :home
 resources :products do
