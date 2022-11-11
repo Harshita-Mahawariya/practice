@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_04_080537) do
+ActiveRecord::Schema.define(version: 2022_11_11_074708) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "fullname"
@@ -122,6 +122,14 @@ ActiveRecord::Schema.define(version: 2022_11_04_080537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "jwt_denylists", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "jti"
+    t.datetime "exp"
+    t.index ["jti"], name: "index_jwt_denylists_on_jti"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "user_id"
     t.string "likeable_type", null: false
@@ -217,6 +225,9 @@ ActiveRecord::Schema.define(version: 2022_11_04_080537) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "roles"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

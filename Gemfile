@@ -58,6 +58,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
-
+gem 'devise-jwt'
+gem 'rack-cors'
 gem 'activeadmin'
 gem 'jquery-rails'
+gem 'active_model_serializers'
