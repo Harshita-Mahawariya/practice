@@ -10,6 +10,8 @@ module Practice
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.action_controller.default_protect_from_forgery = true
+    config.autoload_paths << Rails.root.join('lib')
 
     # Configuration for the application, engines, and railties goes here.
     #
