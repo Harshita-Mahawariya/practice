@@ -63,3 +63,5 @@ gem 'rack-cors'
 gem 'activeadmin'
 gem 'jquery-rails'
 gem 'active_model_serializers'
+gem 'jwt'
+gem 'dotenv-rails', groups: [:development, :test]

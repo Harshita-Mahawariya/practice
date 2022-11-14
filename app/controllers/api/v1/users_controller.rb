@@ -1,7 +1,7 @@
 module Api
 	module V1
 		class UsersController < ActionController::API
-
+			before_action :authenticate_user!
 		  before_action :find_user, except: %i[create index]
 
 		  def roles
@@ -25,6 +25,7 @@ module Api
 
 		  def show
 		  	render json: {result: @user}, status: :ok
+		  	
 		  end
 
 		  def destroy
