@@ -13,7 +13,7 @@ class User < ApplicationRecord
   ROLE = {"Admin": 0, "Super Admin": 1, "Sub Admin": 2}
 
   def generate_jwt
-    JWT.encode({id: id, exp: 15.minutes.from_now.to_i}, ENV['secret_base_key'])
+    JWT.encode({id: id, exp: 2.hours.from_now.to_i}, ENV['secret_base_key'])
   end
 
 end

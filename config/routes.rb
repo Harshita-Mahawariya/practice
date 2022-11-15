@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           get 'roles',to: 'users#roles', on: :collection
         end
         resources :categories
+        resources :products
       end
     end
 

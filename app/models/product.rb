@@ -1,13 +1,19 @@
 class Product < ApplicationRecord
+	include ActiveStorageSupport::SupportForBase64
+	include ActiveStorage::Blob::Analyzable
+
+	
+  has_one_base64_attached :image
+
 	belongs_to :category, optional: true
-	has_one_attached :image
+	# has_one_attached :image
 	has_many :productvariants, dependent: :destroy
 	has_many :cart_items, dependent: :destroy
 	has_many :carts, through: :cart_items 
 	has_many :order_items, dependent: :destroy
 	has_many :orders, through: :order_items
 	has_many :queries ,dependent: :destroy
-	has_many :likes, as: :likeable,dependent: :destroy 
+	has_many :likes, as: :likeable,dependent: :destroy
 	
 	validates :name, presence: true, uniqueness: {scope: :category_id},format: { with: /\A[a-zA-Z]+\z/,message: "only allows letters..." }
 	#validates :price, numericality: true, length: { maximum: 5}
