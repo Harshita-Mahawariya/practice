@@ -1,6 +1,6 @@
 module Api
 	module V1
-		class UsersController < ActionController::API
+		class UsersController < ApiController
 			before_action :authenticate_user!
 		  before_action :find_user, except: %i[create index]
 
