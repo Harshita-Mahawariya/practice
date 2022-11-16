@@ -10,18 +10,21 @@ module Api
       def show
         @product = Product.find_by(id: params[:id])
         render json: {result: @product, status: :ok}
-        # @query = Query.where(product_id: params[:id])
       end
 
       def create
+        # byebug
         @product = Product.new(pro_params)
-        # @product.image = params[:product][:image]
-        # @product.image.attach(data: params[:product][:image])
         if @product.save
-          render json: {result: ActiveModelSerializers::SerializableResource.new(@product, serializer: ProductSerializer), message: "Successfully Created"}
+          #image base64 # render json: {result: ActiveModelSerializers::SerializableResource.new(@product,serializer: ProductSerializer),@productvariant, message: "Successfully Created"}
+          render json: {data: serialized_product(@product),meta: {message:'Product Added successfully'}}
         else
-          render json: {message: "Something went wrong"}
+          render json: {errors: @product.errors.full_messages}
         end
+      end
+
+      def serialized_product product
+        Api::V1::ProductSerializer.new(product)
       end
 
       def destroy
@@ -32,8 +35,9 @@ module Api
 
       private
       def pro_params
-        # params.require(:product).permit(:category_id, :name, :price, :quantity, :image)
-        params.require(:product).permit!
+        # byebug
+        params.require(:product).permit(:name, :category_id,:price, productvariants_attributes: [:id, :name, :place, :price, :stock_quantity, :_destroy, product_with_variant_properties_attributes:[:id, :productvariant_id, :variant_property_id, :_destroy]])
+        #image base 64# params.require(:product).permit!
       end
 
     end
