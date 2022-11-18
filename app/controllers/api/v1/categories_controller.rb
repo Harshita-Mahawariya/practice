@@ -15,7 +15,6 @@ module Api
       end
       
       def create
-        # byebug
         @category = Category.new(cat_params)
         if @category.save
           render json: {result: @category,  message: " Category Created"}

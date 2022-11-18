@@ -2,8 +2,7 @@ class Product < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	include ActiveStorage::Blob::Analyzable
 
-	
-  has_one_base64_attached :image
+  	has_one_base64_attached :image
 
 	belongs_to :category, optional: true
 	# has_one_attached :image

@@ -8,8 +8,8 @@ module Api
       end
 
       def show
-        @product = Product.find_by(id: params[:id])
-        render json: {result: @product, status: :ok}
+        @product = Product.find_by_id(params[:id])
+        render json: {data: serialized_product(@product),meta: {message:'Product'}}
       end
 
       def create
@@ -31,6 +31,23 @@ module Api
         @product = Product.find_by_id(params[:id])
         @product.destroy
         render json: {message:"Successfully deleted"}
+      end
+
+      def add_to_cart
+        cart = Cart.find_or_create_by(user_id: current_user.id)
+        if cart.present?
+          product = Product.find_by(id: params[:product_id])
+          if cart.cart_items.find_by(product_id: product.id).present?
+            render json: {message:"Product is already in cart"}
+          else
+            cart_item = cart.cart_items.new(product_id: product.id, cart_item_price: product.price, cart_item_quantity: 1)
+            if cart_item.save
+              render json: {message: "Product added to cart..."}
+            else
+              render json: {message: "product not saved!!"}
+            end
+          end
+        end
       end
 
       private

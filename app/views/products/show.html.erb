@@ -108,36 +108,41 @@
     </table>
   <%end%>
 
-  <table style="width:60%">
-    <tr>
-      <th colspan="3">Question and answer</th>
-    </tr>
-    <% @query.each do |qr| %>
-      <% if qr.answer_id == nil %>
-        <tr>
-          <td><%= qr.description%>
-            <%#byebug%>
-            <% if qr.likes.where(user_id: current_user.id).present?%>
-              <%= link_to image_tag("/assets/qlike.jpg", height: '25', width: '25'), product_qunlike_path(qr.id) %><br>
-            <%else%>
-              <%= link_to image_tag("/assets/qunlike.png", height: '20', width: '20'), product_qlike_path(qr.id) %><br>
-            <%end%>
-          </td>
-          <td>
-            <% qr.replies.each do |a|%>
-                <%= a.description%><br>
-            <%end%>
-          </td>
-          <%= form_with model: [ @product, @product.queries.build ] , url:"/queries" ,method:"post" do |f| %>
-            <%= f.hidden_field :answer_id, :value => qr.id%>
-            <%= f.hidden_field :product_id, :value => @product.id%>
-            <td>
-              <%= f.text_area :description%>
-              <%= f.submit "Reply"%>
+  <% if @query.present? %>
+    <table style="width:60%">
+      <tr>
+        <th colspan="3">Question and answer</th>
+      </tr>
+      <% @query.each do |qr| %>
+        <% if qr.answer_id == nil %>
+          <tr>
+            <td> <%=qr.id%>&nbsp;&nbsp;<%= qr.description%>
+              <% if qr.user_id == current_user.id%>
+                <%= link_to image_tag("/assets/delete.jpg", height: '20', width: '20'),query_path(qr.id), method: :delete ,data: {confirm: "Are you sure?"} %>
+              <%end%>
+              <% if qr.likes.where(user_id: current_user.id).present?%>
+                <%= link_to image_tag("/assets/qlike.jpg", height: '25', width: '25'), product_qunlike_path(qr.id) %><br>
+              <%else%>
+                <%= link_to image_tag("/assets/qunlike.png", height: '20', width: '20'), product_qlike_path(qr.id) %><br>
+              <%end%>
             </td>
-          <%end%>
-        </tr>
+            <td>
+              <% qr.replies.each do |a|%>
+                  <%= a.description%><br>
+              <%end%>
+            </td>
+            <%= form_with model: [ @product, @product.queries.build ] , url:"/queries" ,method:"post" do |f| %>
+              <%= f.hidden_field :answer_id, :value => qr.id%>
+              <%= f.hidden_field :product_id, :value => @product.id%>
+              <td>
+                <%= f.text_area :description%>
+                <%= f.submit "Reply"%>
+              </td>
+            <%end%>
+          </tr>
+        <%end%>
       <%end%>
-    <%end%>
-  </table>
+    </table>
+  <%end%>
+  
 </center>

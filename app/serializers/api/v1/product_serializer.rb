@@ -1,7 +1,8 @@
 module Api
   module V1
 		class ProductSerializer < ActiveModel::Serializer
-			attributes :id,:price,:name,:quantity, :product_variant
+			attributes :id,:price,:name,:quantity, :product_variant, :query
+			
 			attribute :image do |object|
 				Rails.application.routes.url_helpers.rails_blob_url(object.object.image) if object.object.image.attached?
 			end
@@ -9,6 +10,15 @@ module Api
 			def product_variant
 	        ActiveModel::SerializableResource.new(object.productvariants,  each_serializer: Api::V1::ProductvariantSerializer)
 	    end
+
+	    def query
+				ActiveModel::SerializableResource.new(object.queries.where(answer_id: nil),  each_serializer: Api::V1::QuerySerializer)
+			end
+
+	    # attribute :queries do |object|
+	    # 	byebug
+	    # 	object.object.queries
+	    # end
 
 			# attribute :product_variants do |object|
 			# 	# byebug
