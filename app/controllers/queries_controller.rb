@@ -14,6 +14,13 @@ class QueriesController < ApplicationController
     end
   end
 
+  def destroy
+  	query = Query.find_by_id(params[:id])
+  	@product = query.product_id
+  	query.destroy
+  	redirect_to product_path(@product)
+  end
+
 	private
 	def query_params
 		params.require(:query).permit(:description, :user_id, :product_id, :answer_id)

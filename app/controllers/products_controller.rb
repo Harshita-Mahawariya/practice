@@ -25,6 +25,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def destroy
+    query = Query.find_by_id(params[:id])
+    byebug
+    @product = query. 
+    query.destroy
+    redirect_to product_path(@product)
+  end
+
   def add_to_cart
     cart = Cart.find_or_create_by(user_id: current_user.id)
     if cart.present?
@@ -50,11 +58,11 @@ class ProductsController < ApplicationController
   def like
     @like = Like.find_by(user_id: current_user.id , likeable_id: params[:product_id])
     if @like.present?
-      flash[:message] = "Already liked"
+      # flash[:message] = "Already liked"
       redirect_to products_path
     else
       @like = Like.create(user_id: current_user.id, likeable_id: params[:product_id], likeable_type:Product)
-      flash[:message] = "Liked"
+      # flash[:message] = "Liked"
       redirect_to products_path
     end
   end

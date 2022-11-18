@@ -17,7 +17,21 @@ Rails.application.routes.draw do
           get 'roles',to: 'users#roles', on: :collection
         end
         resources :categories
-        resources :products
+        resources :products do
+          get 'add_to_cart' ,to: 'products#add_to_cart'
+        end
+        resources :carts do
+          delete 'cart_item_destroy', to: 'carts#cart_item_destroy', on: :member
+          put 'update_cart', to: 'carts#update_cart', on: :member
+        end
+        resources :orders
+        resources :likes do 
+          get 'like', to: 'likes#like' ,on: :member
+          get 'unlike', to: 'likes#unlike' , on: :member
+          get 'Qlike', to: 'likes#Qlike' ,on: :member
+          get 'Qunlike', to: 'likes#Qunlike' , on: :member
+        end
+        resources :queries
       end
     end
 
