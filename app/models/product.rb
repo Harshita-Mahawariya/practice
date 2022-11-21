@@ -1,7 +1,7 @@
 class Product < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	include ActiveStorage::Blob::Analyzable
-
+	paginates_per 50
   	has_one_base64_attached :image
 
 	belongs_to :category, optional: true

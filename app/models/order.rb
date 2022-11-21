@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
   before_create :create_order_no
   belongs_to :address
-  enum status: [ :created ,:payment_completed ]
+  enum status: [ :created ,:payment_completed, :refunded, :cancelled ]
 
   def create_order_no
     order_number = create_new_order_no

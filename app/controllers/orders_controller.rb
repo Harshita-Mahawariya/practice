@@ -54,6 +54,22 @@ class OrdersController < ApplicationController
     @oi = OrderItem.where(id: params[:id])
   end
 
+  def cancel_order
+    # byebug
+    @order = Order.find_by_id(params[:format])
+    # return redirect_to orders_path unless @order.present?
+    if @order.status == "payment_completed" 
+      refund = Refund.new(@order).refund
+      @order.update(status: "refunded", razorpay_refund_id: refund.id)    #status canceled 
+    elsif @order.status != "refunded" #or 
+      @order.update(status: "cancelled")
+      # byebug
+    elsif @order.status == "created"
+      @order.update(status: "cancelled")
+    end
+    redirect_to orders_path
+   end
+
 	private
   def cart_params
     params.require(:cart).permit(:cart_price, :cart_quantity, :_destroy, :product_id)
