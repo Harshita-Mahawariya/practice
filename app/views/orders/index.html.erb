@@ -9,14 +9,19 @@
 	<table style="position: relative;top: -103px;">
 	<% if @order&.present? %>
 		<% @order.each do |o|%>
-			<tr><td>Order_Number = <%=  o.order_no%></td><td> Status = <%=o.status%><br><br></td>
-			<% o.order_items.each do |orderitem| %>
-			  <% if orderitem&.product&.image.present? %>
-				  <td><div><a href="<%= product_path(orderitem&.product.id) %>"><%= image_tag url_for(orderitem&.product.image), :size => "200x200" %><br></a></div></td>
+			<tr>
+				<tr><td>Order_Number = <%=  o.order_no%></td><td> Status = <%=o.status%><br><br></td>
+				<% o.order_items.each do |orderitem| %>
+				  <% if orderitem&.product&.image.present? %>
+					  <td><div><a href="<%= product_path(orderitem&.product.id) %>"><%= image_tag url_for(orderitem&.product.image), :size => "200x200" %><br></a></div></td>
+					<%end%>
+			  	<td><h4>Name = <%=orderitem&.product.name%><br>Price = <%=orderitem&.product.price%><br><br></h4></td>
+			  	<td><%=link_to 'Details', details_order_path(orderitem.id)%></td>
+				<% end %>
+				<% if o.status == "payment_completed" or o.status == "created" %>
+					<td><%=link_to 'Cancle order',cancel_order_orders_path(o.id),method: :patch , data: { confirm: "Are you sure? "} %></td>
 				<%end%>
-		  	<td><h4>Name = <%=orderitem&.product.name%><br>Price = <%=orderitem&.product.price%><br><br></h4></td>
-		  	<td><%=link_to 'Details', details_order_path(orderitem.id)%></td>
-			<% end %>
+			</tr>
 		<%end%>
 	 <% else %>
 	  <%= "Product not found" %>

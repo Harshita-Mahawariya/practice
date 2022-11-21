@@ -53,6 +53,7 @@ resources :orders do
   post 'create_order',to: 'orders#create_order', on: :collection
   get 'pay' ,to: 'orders#pay', on: :member
   get 'details', to: 'orders#details',on: :member
+  patch 'cancel_order',to: 'orders#cancel_order', on: :collection
 end
 
 resources :addresses

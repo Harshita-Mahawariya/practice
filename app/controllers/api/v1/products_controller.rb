@@ -3,8 +3,14 @@ module Api
     class ProductsController < ApiController
       before_action :authenticate_user!
       def index
-        @products = Product.all
-        render json: {result:@products, status: :ok}
+        if params[:page]
+          @products = Product.page(params[:page]).per(params[:per_page])
+          pageCount = (Product.count / params[:per_page].to_f).ceil
+        else
+          @products = Product.order('updated_at DESC')
+          pageCount = 1
+        end
+        render json: {product_per_page_count: @products.count,total_products: Product.count, result: @products}
       end
 
       def show

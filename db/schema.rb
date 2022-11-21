@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_14_094435) do
+ActiveRecord::Schema.define(version: 2022_11_21_071640) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "fullname"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 2022_11_14_094435) do
     t.string "razorpay_order_id"
     t.string "razorpay_payment_id"
     t.integer "status"
+    t.string "razorpay_refund_id"
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
