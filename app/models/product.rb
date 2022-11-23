@@ -2,10 +2,9 @@ class Product < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	include ActiveStorage::Blob::Analyzable
 	paginates_per 50
-  	has_one_base64_attached :image
-
+  	# has_one_base64_attached :image
 	belongs_to :category, optional: true
-	# has_one_attached :image
+	has_one_attached :image
 	has_many :productvariants, dependent: :destroy
 	has_many :cart_items, dependent: :destroy
 	has_many :carts, through: :cart_items 

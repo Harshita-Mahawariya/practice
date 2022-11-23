@@ -14,9 +14,9 @@ class OrdersController < ApplicationController
       if @order.save
         order = Razorpay::Order.create amount: @order.amount*100, currency: 'INR', receipt: 'TEST'
         @order.update(razorpay_order_id: order.id, status: "created")
+        # OrderMailer.Order_confirmed(@order).deliver_now
         redirect_to pay_order_path(@order.id)
       end
-      #redirect_to orders_path
       cart.cart_items.destroy_all
       return
     else
@@ -35,12 +35,13 @@ class OrdersController < ApplicationController
   end
 
   def update
-    order = Order.find_by(id: params[:id])
-    if order.present?
+    @order = Order.find_by(id: params[:id])
+    if @order.present?
        payment_response = {razorpay_order_id: params[:razorpay_order_id], razorpay_payment_id: params[:razorpay_payment_id], razorpay_signature: params[:razorpay_signature] }
        verify_result = Razorpay::Utility.verify_payment_signature(payment_response)
        if verify_result
-          order.update(razorpay_payment_id: params[:razorpay_payment_id], status: "payment_completed")
+          @order.update(razorpay_payment_id: params[:razorpay_payment_id], status: "payment_completed")
+          OrderMailer.Order_confirmed(@order).deliver_now
        else
           flash[:error] = "something went wrong!!!" 
           redirect_to orders_path

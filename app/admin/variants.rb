@@ -39,7 +39,6 @@ ActiveAdmin.register Variant do
       tab 'Variant' do
         f.inputs do
           f.input :name
-          #byebug
           panel 'Variant Property' do
             f.has_many :variant_properties, heading:' ', allow_destroy: true,class: "pv_3", new_record: "Add New" do |a|
               a.input :name

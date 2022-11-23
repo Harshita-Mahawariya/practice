@@ -12,18 +12,13 @@ ActiveAdmin.register Account do
   end
 
   index do
-    # table_for accounts do
-      selectable_column
-      id_column
-      # column :userprofile do |a|
-      #    image_tag a&.userprofile, size: "20x20" if a&.userprofile.present?
-      # end
-      column :uniquenumber
-      column :fullname
-      column :email
-      column :country
-      actions
-    # end
+    selectable_column
+    id_column
+    column :uniquenumber
+    column :fullname
+    column :email
+    column :country
+    actions
   end
 
   form do |f|

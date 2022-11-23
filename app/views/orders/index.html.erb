@@ -10,7 +10,7 @@
 	<% if @order&.present? %>
 		<% @order.each do |o|%>
 			<tr>
-				<tr><td>Order_Number = <%=  o.order_no%></td><td> Status = <%=o.status%><br><br></td>
+				<tr><td>Order_Number = <%=o.order_no%></td><td> Status = <%=o.status%><br><br></td>
 				<% o.order_items.each do |orderitem| %>
 				  <% if orderitem&.product&.image.present? %>
 					  <td><div><a href="<%= product_path(orderitem&.product.id) %>"><%= image_tag url_for(orderitem&.product.image), :size => "200x200" %><br></a></div></td>

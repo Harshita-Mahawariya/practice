@@ -23,7 +23,6 @@ ActiveAdmin.register Product do
   end
 
   action_item :new, only: :index  do
-     # byebug
     link_to 'Add New' , '/admin/products/new'
   end
 
@@ -34,8 +33,6 @@ ActiveAdmin.register Product do
   csv do
       column :category_id
       column :Brand_name
-      #column :price
-      #column :quantity
   end
   action_item only: :index do
     link_to 'Upload CSV', action: 'upload_csv'
@@ -68,7 +65,7 @@ ActiveAdmin.register Product do
     column :actions do |item|
       links = []
       links << (link_to 'Show', admin_product_path(item))
-      links << (link_to 'Delete', admin_product_path(item), method: :delete, :data => {confirm: "Are you sure you want to delete?"})
+      links << (link_to 'Delete', admin_product_path(item), method: :delete)
     end
   end
 
@@ -82,9 +79,9 @@ ActiveAdmin.register Product do
           f.has_many :productvariants, allow_destroy: true, heading: ' ', new_record: "Add New Product Variant", remove_record: "Remove Product Variant" , class: "pv_panel" do |a|
             a.input :name, label: "Brand Name"
             a.input :place
-            a.input :price , input_html: { placeholder: "10 % tax will be added to price" }
+            # a.input :price , input_html: { placeholder: "10 % tax will be added to price" }
             # para "10 % tax will be added to price"
-            a.input :stock_quantity
+            # a.input :stock_quantity
             a.input :Description
             a.has_many :product_with_variant_properties , heading: "<center><b>Variant Property</b></center>".html_safe, allow_destroy: true, new_record: "Add New Variant Property",remove_record: "Remove Variant Property" ,class: "pv" do |b|
               b.input :variant_property, label: "Variant", as: :select, collection: Variant.all.map { |u| [u.name, u.id] }, :prompt => "--select-- variant", multiple: false, input_html: {class: "variant"}
@@ -103,10 +100,6 @@ ActiveAdmin.register Product do
     attributes_table do
       row :name 
       row :category
-      #row :price do |product|
-      #  {}"#{product&.price}" + " " + "(final price after adding 10 % tax)"
-      # end
-      #row :quantity
       row :image do |ad|
         image_tag url_for(ad&.image), size: "200x200" if ad&.image.present?
       end
@@ -163,19 +156,11 @@ ActiveAdmin.register Product do
       var_name = []
       permitted_params[:product][:productvariants_attributes]&.each {|key,value| var_name&.append(value[:name])}
       if var_name.length != var_name.uniq.length
-        # resource.errors.add(:productvariants, "Product Variants can't be same")
-        #redirect_to admin_product_path
         flash[:error] = "Duplicate not allowed"
         redirect_to(admin_product_path) and return
       else
         super
       end 
     end
-
-    # def destroy
-    #   # byebug
-    #   resource&.destroy
-    #   redirect_to 'admin_product_path'
-    # end
   end
 end

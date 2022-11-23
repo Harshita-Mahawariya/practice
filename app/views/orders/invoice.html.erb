@@ -1,0 +1,88 @@
+<style>
+  table{
+    position: relative;
+    top: -10px;
+    border: 1px solid white;
+    border-collapse: collapse;
+  }
+  td,th{
+    background-color: #d1e0e0;
+    border: 1px solid white;
+    border-collapse: collapse;
+    font-size: 20px;
+  }
+  div.a {
+    text-indent: 1300px;
+  }
+  .b{
+    font-size: 20px;
+    position: relative;
+    top: -158px;
+    padding-left: 1460px;
+  }
+  .head{
+    font-size: 20px;
+  }
+  html{
+    overflow-x: hidden;
+  }
+   .des{
+    width: 845px;height: 35px;"
+   }
+</style>
+<center>
+<p>INVOICE</p>
+  <table style="width:90%">
+    <tr>
+      <th colspan = '5'>Order</th>
+    </tr>
+    <tr>
+      <th colspan="5">Order Number</th>
+    </tr>
+    <tr>
+      <td colspan="5"><%= @order.order_no %></td>
+    </tr>
+    <tr>
+      <th colspan="5">Receiver</th>
+    </tr>
+    <tr>
+      <td colspan="5"><%=@order.user.first_name%> <%=@order.user.last_name%></td>
+    </tr>
+    <tr>
+      <th colspan="5">Amount</th>
+    </tr>
+    <tr>
+      <td colspan="5"><%= @order.amount%></td>
+    </tr>
+    <tr>
+      <th colspan="5">Status</th>
+    </tr>
+    <tr>
+      <td colspan="5"><%= @order.status%></td>
+    </tr>
+    <%if @order.order_items.present?%>
+        <tr><th colspan="5">Order Products</th></tr>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Image</th>
+        </tr>
+      <% @order.order_items.each do |oi|  %>
+        <tr>
+          <td><%= oi.product.name%></td>
+          <td><%= oi.product.price%></td>
+          <td><%= oi.product_quantity%></td>
+          <td><% if oi.product.image.present? %>
+                 <%= image_tag oi&.product&.image, :size => "200x200" %>
+              <%end%>
+          </td>
+        </tr>
+      <% end %>
+    <%end%>
+    <tr>
+      <th colspan="5">Delivering to - </th>
+    </tr>
+    <tr><td colspan="5">house no <%=@order.address.house_no%> building name <%=@order.address.building_name%>,<%=@order.address.area_or_colony%>,<%=@order.address.pincode%>,<%=@order.address.city%>,<%=@order.address.state%>,<%=@order.address.near_by_location%></td></tr>
+  </table>
+</center>
