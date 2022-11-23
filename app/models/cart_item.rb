@@ -16,14 +16,4 @@ class CartItem < ApplicationRecord
     end     
     self.cart.update(cart_price: cart_price, cart_quantity: cart_quantity)
   end
-
-  # def cart_quantity
-  # 	cart_quantity = 0
-  #   self.cart.cart_items.each do |ci|
-  #       unless ci.cart_item_quantity.nil? 
-  #           cart_quantity += ci.cart_item_quantity.to_f
-  #       end
-  #   end     
-  #   self.cart.update(cart_quantity: cart_quantity)
-  # end
 end

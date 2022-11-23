@@ -67,3 +67,6 @@ gem 'jwt'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'active_storage_base64'
 gem 'kaminari'
+gem "letter_opener", group: :development
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

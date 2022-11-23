@@ -12,7 +12,6 @@ class Account < ApplicationRecord
 	validates_format_of :email, :with => /\A((?=.*\d)+[^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,presence: true
 	
   def password_check
-  	# byebug
     return if password&.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/)
     errors.add :password, ' Password must contain 1 uppercasse , 1 lowercase, 1 Special character, 1 digit '
   end

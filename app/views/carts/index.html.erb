@@ -72,14 +72,14 @@
 <% if @cart_item&.present? %>
   <h3 style="position: relative;top: -140px;left: -77px; font-size: 25px;"> Total cart price = <%= @cart.cart_price %> &nbsp &nbsp &nbsp Total cart Quantity = <%= @cart.cart_quantity%></h3>
 	<div style="position: relative;top: -145px; font-size: 20px;">
-	Choose address =
+	Choose address-
 	<%= form_with url: create_order_orders_path, method: "post" do |f|%>
 		<%@addresses.each do |a|%>
 			<%= f.radio_button :address_id, a.id %>
 				<label>house no <%=a.house_no%> building name <%=a.building_name%>,<%=a.area_or_colony%>,<%=a.pincode%>,<%=a.city%>,<%=a.state%>,<%=a.near_by_location%></label><br/>
 		<%end%>
-		<a href ="<%= new_address_path(current_user.id)%>"> Add new address</a><br/>
-	 	<%= f.submit "Place order"%><br/><br/>
+		<br>
+		<a href ="<%= new_address_path(current_user.id)%>"> Add new address</a>&emsp;<%= f.submit "Place order"%><br/><br/>
 	<%end%>
 	</div>
 	<% else %>

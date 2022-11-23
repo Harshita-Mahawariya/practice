@@ -49,6 +49,10 @@
       <td colspan="5"><%= @product&.category&.name%></td>
     </tr>
     <tr>
+      <th>Price</th>
+      <td  colspan="5"><%= @product.price%></td>
+    </tr>
+    <tr>
       <th>Image</th>
       <td colspan="5"><% if @product.image.present? %>
              <%= image_tag @product.image, :size => "200x200" %>
@@ -61,14 +65,12 @@
         <tr></tr>
         <tr>
           <th>Name</th>
-          <th>Price</th>
           <th>Place</th>
           <th>Description</th>
           <th colspan="2">Variant & Variant Property</th>
         </tr>
         <tr>
           <td rowspan="6" ><%= pv&.name%></td>
-          <td rowspan="6" ><%= pv&.price%></td>
           <td rowspan="6" ><%= pv&.place%></td>
           <td rowspan="6" ><%= pv&.Description%></td>
           <%if pv.product_with_variant_properties.present?%>

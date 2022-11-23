@@ -1,7 +1,6 @@
 jQuery(document).ready(function($){
   $(document).on('change', '.variant', function(evt) {
      var variant_id = $(this).val()
-    // var variant_id = jQuery('#variant').val()
     _ind = $(this).attr('id').split("attributes")[1].split("_")[1] 
     ind = $(this).attr('id').split("attributes")[2].split("_")[1]
     

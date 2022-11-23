@@ -7,7 +7,7 @@ ActiveAdmin.register Cart do
     selectable_column
     id_column
     column "Account" do |cart|
-      text_node "&nbsp;".html_safe
+    text_node "&nbsp;".html_safe
       if cart&.account.present?
        link_to cart&.account&.name, admin_account_path(cart&.account)
       end
